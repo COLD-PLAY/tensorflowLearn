@@ -5,6 +5,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 state = tf.Variable(0, name = 'counter')
+
 one = tf.constant(1)
 
 new_value = tf.add(state, one)
@@ -33,6 +34,12 @@ with tf.Session() as sess:
 	result = sess.run([mul, intermed])
 	print(result)
 
-input1 = tf.placeholder(tf.types.float32)
-input2 = tf.placeholder(tf.types.float32)
+input1 = tf.placeholder(tf.float32)
+input2 = tf.placeholder(tf.float32)
 
+output = tf.multiply(input1, input2)
+
+with tf.Session() as sess:
+	product = sess.run(output, feed_dict={input1: [12.], input2: [44.]})
+
+	print(product)

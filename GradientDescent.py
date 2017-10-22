@@ -1,12 +1,17 @@
 import tensorflow as tf
 import numpy as np
 
+from matplotlib import pyplot as plt
+
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 # create data
 x_data = np.random.rand(100).astype(np.float32)
 y_data = x_data*0.1 + 0.3
+
+plt.plot(x_data, y_data, 'bo')
+plt.show()
 
 ### create tensorflow structure start ###
 weight = tf.Variable(tf.random_uniform([1], -1.0, 1.0))
