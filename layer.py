@@ -7,7 +7,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 # define the function to add layer to NN and return the outputs of this layer
 def add_layer(inputs, in_size, out_size, n_layer=None, activation_function=None):
-    layer_name = 'layer%d' % n_layer
+    layer_name = 'layer%s' % n_layer
     
     with tf.name_scope('layer'):
         with tf.name_scope('weights'):
