@@ -16,9 +16,9 @@ xs = tf.placeholder(tf.float32, [None, 784]) # 28 * 28
 ys = tf.placeholder(tf.float32, [None, 10]) # 10 numbers
 
 # add hiden layer
-l1 = add_layer(xs, 784, 100, 'hidden_layer', activation_function=tf.nn.tanh)
+# l1 = add_layer(xs, 784, 10, 'hidden_layer', activation_function=tf.nn.tanh)
 # add output layer
-prediction = add_layer(l1, 100, 10, 'output_layer', activation_function=tf.nn.softmax)
+prediction = add_layer(xs, 784, 10, 'output_layer', activation_function=tf.nn.softmax)
 
 # the error between prediction and real data
 cross_entropy = tf.reduce_mean(-tf.reduce_sum(ys * tf.log(prediction), reduction_indices=[1]))
@@ -38,16 +38,21 @@ merged = tf.summary.merge_all()
 for i in range(1001):
     batch_xs, batch_ys = mnist.train.next_batch(100)
     sess.run(train_step, feed_dict={xs: batch_xs, ys: batch_ys})
-
-    if i % 50 == 0:
-        train_result = sess.run(merged, feed_dict={xs: mnist.train.images, ys: mnist.train.labels})
-        test_result = sess.run(merged, feed_dict={xs: mnist.test.images, ys: mnist.test.labels})
+    train_result = sess.run(merged, feed_dict={xs: mnist.train.images, ys: mnist.train.labels})
+    test_result = sess.run(merged, feed_dict={xs: mnist.test.images, ys: mnist.test.labels})
+    
+    train_writer.add_summary(train_result, i)
+    test_writer.add_summary(test_result, i)
+    
+    # if i % 50 == 0:
+    #     train_result = sess.run(merged, feed_dict={xs: mnist.train.images, ys: mnist.train.labels})
+    #     test_result = sess.run(merged, feed_dict={xs: mnist.test.images, ys: mnist.test.labels})
         
-        train_writer.add_summary(train_result, i)
-        test_writer.add_summary(test_result, i)
+    #     train_writer.add_summary(train_result, i)
+    #     test_writer.add_summary(test_result, i)
 
-        correct_prediction = tf.equal(tf.argmax(ys, 1), tf.argmax(prediction, 1))
-        accuracy = tf.reduce_mean(tf.cast(correct_prediction, 'float'))
+        # correct_prediction = tf.equal(tf.argmax(ys, 1), tf.argmax(prediction, 1))
+        # accuracy = tf.reduce_mean(tf.cast(correct_prediction, 'float'))
 
         # print(i, sess.run(accuracy, feed_dict={xs: mnist.test.images, ys: mnist.test.labels}));
     
