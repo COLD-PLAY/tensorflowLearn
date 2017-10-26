@@ -15,9 +15,11 @@ import matplotlib.pyplot as plt
 
 X, y = datasets.make_regression(n_samples=100, n_features=1, n_targets=1, noise=10.)
 plt.scatter(X, y)
-plt.show()
 
 model = LinearRegression()
 model.fit(X, y)
 
-print(model.get_params)
+print(model.coef_, model.intercept_) # y = W*X + b
+
+plt.scatter(X, model.coef_ * X + model.intercept_)
+plt.show()
