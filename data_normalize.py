@@ -27,17 +27,23 @@ X = preprocessing.scale(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 clf = SVC()
-# clf.fit(X_train, y_train)
 
-clf.fit(X, y)
+clf.fit(X_train, y_train)
+# clf.fit(X, y)
 prediction = clf.predict(X)
+# prediction = clf.predict(X_test)
 
 plt.subplot(121)
 plt.title('本来的分类')
 plt.scatter(X[:, 0], X[:, 1], c=y)
+# plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train)
 
 plt.subplot(122)
 plt.title('预测的分类')
 plt.scatter(X[:, 0], X[:, 1], c=prediction)
+# plt.scatter(X_test[:, 0], X_test[:, 1], c=prediction)
 
 plt.show()
+
+# print(clf.score(X_test, y_test))
+print(clf.score(X, y))
