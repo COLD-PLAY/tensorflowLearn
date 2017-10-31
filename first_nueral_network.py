@@ -36,7 +36,7 @@ init = tf.global_variables_initializer()
 
 sess = tf.Session()
 merged = tf.summary.merge_all()
-writer = tf.summary.FileWriter("logs/", sess.graph)
+# writer = tf.summary.FileWriter("logs/", sess.graph)
 
 sess.run(init)
 
