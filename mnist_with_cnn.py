@@ -122,11 +122,27 @@ class Trainer(object):
     def main():
         accuracy_total = restore(filename='2333.pkl')
         print(accuracy_total)
+    
 
-# if __name__ == '__main__':
-#     trainer = Trainer()
-#     Trainer.train()
-for prob in np.linspace(0.1, 1.0, 10):
-    trainer = Trainer(prob)
-    trainer.train()
-    trainer.save(filename=str(prob) + '_2333.pkl')
+
+def main():
+    # for prob in np.linspace(0.4, 1.0, 7):
+    #     trainer = Trainer(prob)
+    #     trainer.train()
+    #     trainer.save(filename=str(prob) + '_2333.pkl')
+    
+    import pickle
+    import matplotlib.pyplot as plt
+
+    accuracy = pickle.load(open('accuracy_with_kind_of_keep_prob.pkl', 'rb'))
+
+    for i in np.linspace(0.1, 1.0, 10):
+        plt.plot(np.linspace(1, 301, 31), accuracy[str(i)], label=str(i))
+
+    plt.legend(loc='best')
+    plt.xlabel('data')
+    plt.ylabel('accuracy')
+    plt.show()
+
+if __name__ == '__main__':
+    main()
